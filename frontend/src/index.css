@@ -12,6 +12,6 @@
     }
 
     .btn-primary {
-        @apply bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 text-white font-medium py-2 px-4 rounded-lg hover:border-primary hover:shadow-[0_0_12px_rgba(255, 75, 75, 0.2)] transition-all flex items-center justify-center gap-2;
+        @apply bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 text-white font-medium py-2 px-4 rounded-lg hover:border-primary hover:shadow-[0_0_12px_#ff4b4b33] transition-all flex items-center justify-center gap-2;
     }
 }
