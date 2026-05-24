@@ -327,16 +327,17 @@ if st.session_state.level == "global":
     selected_data = st.plotly_chart(world_fig, use_container_width=True, on_select="rerun", key="world_map")
     
     # Handle direct map selection (Click drill-down)
-    if selected_data and "points" in selected_data and len(selected_data["points"]) > 0:
-        point = selected_data["points"][0]
-        clicked_country = point.get("location") or point.get("hovertext")
-        if clicked_country:
-            # Clean matching in case hovertext contains coordinates
-            st.session_state.selected_country = clicked_country
-            st.session_state.level = "country"
-            st.session_state.active_year = MIN_YEAR
-            st.session_state.animating = True
-            st.rerun()
+    if selected_data and "selection" in selected_data:
+        points = selected_data["selection"].get("points", [])
+        if len(points) > 0:
+            point = points[0]
+            clicked_country = point.get("location") or point.get("hovertext")
+            if clicked_country:
+                st.session_state.selected_country = clicked_country
+                st.session_state.level = "country"
+                st.session_state.active_year = MIN_YEAR
+                st.session_state.animating = True
+                st.rerun()
             
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -426,15 +427,17 @@ elif st.session_state.level == "country":
     # Display Plotly map and capture clicks
     selected_data = st.plotly_chart(country_fig, use_container_width=True, on_select="rerun", key="country_map")
     
-    if selected_data and "points" in selected_data and len(selected_data["points"]) > 0:
-        point = selected_data["points"][0]
-        clicked_city = point.get("hovertext")
-        if clicked_city:
-            st.session_state.selected_city = clicked_city
-            st.session_state.level = "city"
-            st.session_state.active_year = MIN_YEAR
-            st.session_state.animating = True
-            st.rerun()
+    if selected_data and "selection" in selected_data:
+        points = selected_data["selection"].get("points", [])
+        if len(points) > 0:
+            point = points[0]
+            clicked_city = point.get("hovertext")
+            if clicked_city:
+                st.session_state.selected_city = clicked_city
+                st.session_state.level = "city"
+                st.session_state.active_year = MIN_YEAR
+                st.session_state.animating = True
+                st.rerun()
             
     st.markdown('</div>', unsafe_allow_html=True)
     
