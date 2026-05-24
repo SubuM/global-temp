@@ -110,6 +110,11 @@ st.markdown("""
         color: #ff4b4b;
         font-weight: 600;
     }
+    
+    /* Lock chart containers to minimum height to prevent scroll jumps on redraw */
+    div[data-testid="stPlotlyChart"] {
+        min-height: 520px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -170,7 +175,8 @@ with st.sidebar:
         if selected_manual_country != "Select...":
             st.session_state.selected_country = selected_manual_country
             st.session_state.level = "country"
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
     elif st.session_state.level == "country":
@@ -184,13 +190,15 @@ with st.sidebar:
         if selected_manual_city != "Select...":
             st.session_state.selected_city = selected_manual_city
             st.session_state.level = "city"
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
         if st.button("⬅ Return to World Map", use_container_width=True):
             st.session_state.level = "global"
             st.session_state.selected_country = None
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
 
     elif st.session_state.level == "city":
@@ -200,14 +208,16 @@ with st.sidebar:
         if st.button("⬅ Return to Country Map", use_container_width=True):
             st.session_state.level = "country"
             st.session_state.selected_city = None
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
         if st.button("⬅ Return to World Map", use_container_width=True):
             st.session_state.level = "global"
             st.session_state.selected_country = None
             st.session_state.selected_city = None
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
     st.markdown("---")
@@ -324,7 +334,8 @@ if st.session_state.level == "global":
             # Clean matching in case hovertext contains coordinates
             st.session_state.selected_country = clicked_country
             st.session_state.level = "country"
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
     st.markdown('</div>', unsafe_allow_html=True)
@@ -421,7 +432,8 @@ elif st.session_state.level == "country":
         if clicked_city:
             st.session_state.selected_city = clicked_city
             st.session_state.level = "city"
-            st.session_state.animating = False
+            st.session_state.active_year = MIN_YEAR
+            st.session_state.animating = True
             st.rerun()
             
     st.markdown('</div>', unsafe_allow_html=True)

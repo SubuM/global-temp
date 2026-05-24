@@ -76,6 +76,7 @@ def render_world_map(df, active_year):
     
     # Dark premium design update
     fig.update_layout(
+        clickmode="event+select",
         title=dict(
             text=f"Global Temperatures — {active_year}",
             x=0.5,
@@ -145,6 +146,7 @@ def render_country_map(df, selected_country, active_year):
     )
     
     fig.update_layout(
+        clickmode="event+select",
         title=dict(
             text=f"Major Cities in {selected_country} — {active_year}",
             x=0.5,
