@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: global_temp_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    # This pulls your database credentials from the .env file on the server
+    env_file:
+      - .env
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: global_temp_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
