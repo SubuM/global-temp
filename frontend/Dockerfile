@@ -4,6 +4,10 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
+
+# INCREASE NODE MEMORY LIMIT to prevent OOM crash when bundling Plotly
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN npm run build
 
 # Stage 2: Serve via Nginx
