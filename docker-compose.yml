@@ -6,7 +6,7 @@ services:
     container_name: global_temp_backend
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"   # Locked to localhost
     env_file:
       - .env
 
@@ -15,6 +15,6 @@ services:
     container_name: global_temp_frontend
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "4000:80"    # Locked to localhost on port 4000
     depends_on:
       - backend
